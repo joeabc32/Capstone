@@ -1,24 +1,16 @@
 import './App.css';
-import Footer from './Footer';
-import Header from './Header';
-import Navigation from './Navigation';
-import Mainpage from './Mainpage';
-import Testimonials from './Testimonials';
-import About from './About';
-import CalendarSelect from './CalendarSelect';
-import Reservation from './Reservation';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './Home';
+import Reservation from './Reservation'
 
 function App() {
   return (
-    <>
-      {/* <Navigation></Navigation>
-      <Header></Header>
-      <Mainpage></Mainpage>
-      <Testimonials></Testimonials>
-      <About></About>
-      <Footer></Footer> */}
-      <Reservation></Reservation>
-    </>
+    <Router>
+      <Routes>
+        <Route path={'/'} element={<Home />} />
+        <Route path={'/reserve'} element={<Reservation />} />
+      </Routes>
+    </Router>
   );
 }
 

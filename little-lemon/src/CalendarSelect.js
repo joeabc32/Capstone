@@ -1,23 +1,28 @@
 import * as React from 'react';
-import { DateCalendar, LocalizationProvider } from '@mui/x-date-pickers';
+import { ArrowDropDownIcon, DateCalendar, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { Typography, Menu, MenuItem, Button } from '@mui/material';
+import { Typography, Menu, MenuItem, Button, Icon } from '@mui/material';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import { useState } from 'react';
-import { IconButton } from '@mui/material';
 import person from "./images/person.png";
 import clock from './images/clock.png';
 import dish from "./images/Dish icon.svg";
 import lemon from './images/logolemon.PNG';
+import Confirmation from './Confirmation';
 import dayjs from 'dayjs';
+import arrow from './images/arrow.png';
 
 
 function CalendarSelect() {
+    const today = dayjs();
+    const date_today = today.format('YYYY-MM-DD');
+
+
     const [timeSelected, setTimeSelected] = useState("Select a Time");
     const [peopleSelected, setPeopleSelected] = useState("Select Party Size");
     const [seatingType, setSeatingType] = useState("Seating Preference");
     const [ocassion, setOccasion] = useState("Select the Occasion")
-    const [dateChoice, setDateChoice] = useState(null);
+    const [dateSelected, setDateSelected] = useState(date_today);
 
     function timing(e) {
         const text = e.target.textContent;
@@ -39,10 +44,17 @@ function CalendarSelect() {
         setOccasion(text);
     }
 
-    function dateSet() {
-        const element = document.getElementById(':r1:-grid-label').innerHTML;
-        setDateChoice(element);
+    function dateUpdate(newValue) {
+        const updatedDate = dayjs(newValue).format('YYYY-MM-DD');
+        setDateSelected(updatedDate);
     }
+
+
+    const lemon_image = <img src={lemon} width={50} height={40} style={{ paddingRight: "10px" }}></img>
+    const dish_image = <img src={dish} width={50} style={{ marginRight: "10px", backgroundColor: "white" }}></img>
+    const clock_image = <img src={clock} width={50} style={{ paddingRight: "10px" }}></img>
+    const person_image = <img src={person} width={50} style={{ paddingRight: "10px" }}></img>
+    const arrow_image = <img src={arrow} width={20} style={{ paddingLeft: "10px" }}></img>
 
     return (
         <div style={{ paddingBottom: "40px" }}>
@@ -50,15 +62,14 @@ function CalendarSelect() {
                 <Typography variant="h3" component={'div'} color={"black"} style={{ fontFamily: "Markazi", paddingLeft: "22vw", paddingTop: "30px", paddingBottom: "20px" }}> Make a Reservation</Typography>
                 <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1.5fr" }}>
                     <div style={{ paddingLeft: "13vw" }}>
-                        <DateCalendar disablePast onChange={dateSet} />
+                        <DateCalendar disablePast onChange={dateUpdate} />
                     </div>
                     <div style={{ paddingLeft: "100px" }}>
 
                         <PopupState variant="popover" popupId="demo-popup-menu">
                             {(popupState) => (
                                 <React.Fragment>
-                                    <Button variant="contained" size='large' style={{ backgroundColor: "#495E57", width: "250px", height: "80px" }} {...bindTrigger(popupState)}>
-                                        <IconButton><img src={lemon} width={34} style={{ backgroundColor: "white" }}></img></IconButton>
+                                    <Button startIcon={lemon_image} variant="contained" size='large' endIcon={arrow_image} style={{ backgroundColor: "#495E57", width: "300px", height: "80px" }} {...bindTrigger(popupState)}>
                                         {ocassion}
                                     </Button>
                                     <Menu {...bindMenu(popupState)}>
@@ -76,8 +87,7 @@ function CalendarSelect() {
                         <PopupState variant="popover" popupId="demo-popup-menu">
                             {(popupState) => (
                                 <React.Fragment>
-                                    <Button variant="contained" size='large' style={{ backgroundColor: "#495E57", width: "250px", height: "80px" }} {...bindTrigger(popupState)}>
-                                        <IconButton><img src={clock} width={50}></img></IconButton>
+                                    <Button startIcon={clock_image} variant="contained" size='large' endIcon={arrow_image} style={{ backgroundColor: "#495E57", width: "300px", height: "80px" }} {...bindTrigger(popupState)}>
                                         {timeSelected}
                                     </Button>
                                     <Menu {...bindMenu(popupState)}>
@@ -99,8 +109,7 @@ function CalendarSelect() {
                         <PopupState variant="popover" popupId="demo-popup-menu">
                             {(popupState) => (
                                 <React.Fragment>
-                                    <Button variant="contained" size='large' style={{ backgroundColor: "#495E57", width: "250px", height: "80px" }} {...bindTrigger(popupState)}>
-                                        <IconButton><img src={dish} width={50} style={{ backgroundColor: "white" }}></img></IconButton>
+                                    <Button startIcon={dish_image} variant="contained" size='large' endIcon={arrow_image} style={{ backgroundColor: "#495E57", width: "300px", height: "80px" }} {...bindTrigger(popupState)}>
                                         {seatingType}
                                     </Button>
                                     <Menu {...bindMenu(popupState)}>
@@ -117,8 +126,7 @@ function CalendarSelect() {
                         <PopupState variant="popover" popupId="demo-popup-menu">
                             {(popupState) => (
                                 <React.Fragment>
-                                    <Button variant="contained" size='large' style={{ backgroundColor: "#495E57", width: "250px", height: "80px" }} {...bindTrigger(popupState)}>
-                                        <IconButton><img src={person} width={50}></img></IconButton>
+                                    <Button startIcon={person_image} variant="contained" size='large' endIcon={arrow_image} style={{ backgroundColor: "#495E57", width: "300px", height: "80px" }} {...bindTrigger(popupState)}>
                                         {peopleSelected}
                                     </Button>
                                     <Menu {...bindMenu(popupState)}>
@@ -137,7 +145,7 @@ function CalendarSelect() {
                     </div >
                 </div>
             </LocalizationProvider >
-            <h1>{dateChoice}</h1>
+            <Confirmation people={peopleSelected} ocassion={ocassion} date={dateSelected} time={timeSelected} seating={seatingType} />
         </div >
     );
 }

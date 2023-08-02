@@ -1,48 +1,50 @@
 import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import { Button } from '@mui/material';
-import salad from './images/greek salad.jpg'
+import { Button, FormHelperText, InputLabel, Input, Grow } from '@mui/material';
+import FormControl from '@mui/material/FormControl';
+
+const handleSubmit = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const pop = formData.get('people')
+    console.log(pop);
+};
 
 function Confirmation(props) {
-    if (props.people === "Select Party Size") {
-
-        return (
-            <div style={{ paddingLeft: "300px" }}>
-                <img src={salad} width={500} style={{ paddingLeft: "200px", paddingRight: "200px" }}></img>
-                <TextField
-                    style={{ width: "550px", border: "solid", borderRadius: "6px" }}
-                    id="filled-multiline-static"
-                    label="Make a Special Request"
-                    multiline
-                    rows={10}
-                    defaultValue="We are looking for..."
-                    variant="filled"
-                />
-                <div style={{ paddingLeft: "50vw", paddingBottom: "60px" }}>
-                    <Button style={{ backgroundColor: "#F4CE14", color: "black", padding: "20px 40px 20px 40px", fontWeight: "bold", fontSize: "22px" }} size="large">Find a Table</Button>
-                </div>
-            </div>
-        )
-    }
-    else {
-        return (
-            <div style={{ paddingLeft: "300px" }}>
-                <img src={salad} width={500} style={{ paddingLeft: "200px", paddingRight: "200px" }}></img>
-                <TextField
-                    style={{ width: "550px", border: "solid", borderRadius: "6px" }}
-                    id="filled-multiline-static"
-                    label="Make a Special Request"
-                    multiline
-                    rows={10}
-                    defaultValue="We are looking for..."
-                    variant="filled"
-                />
-                <div style={{ paddingLeft: "50vw", paddingBottom: "60px" }}>
-                    <Button style={{ backgroundColor: "#F4CE14", color: "black", padding: "20px 40px 20px 40px", fontWeight: "bold", fontSize: "22px" }} size="large">Find a Table</Button>
-                </div>
-            </div>
-        )
-    }
+    return (
+        <>
+            <div>
+                <form onSubmit={handleSubmit} style={{ paddingTop: "60px" }}>
+                    <div style={{ display: "flex", justifyContent: "center" }}>
+                        <FormControl>
+                            <InputLabel htmlFor="people">Select Party Size</InputLabel>
+                            <Input name="people" aria-describedby="my-helper-text" readOnly required={true} value={props.people} />
+                        </FormControl>
+                        <FormControl>
+                            <InputLabel htmlFor="date">Select a Date on the Calendar</InputLabel>
+                            <Input name="date" aria-describedby="my-helper-text" readOnly required={true} value={props.date} />
+                        </FormControl>
+                        <FormControl>
+                            <InputLabel htmlFor="occasion">Select the Occasion</InputLabel>
+                            <Input name="occasion" aria-describedby="my-helper-text" readOnly required={true} value={props.ocassion} />
+                        </FormControl>
+                        <FormControl>
+                            <InputLabel htmlFor="time">Select an Available Time</InputLabel>
+                            <Input name="time" aria-describedby="my-helper-text" readOnly required={true} value={props.time} />
+                        </FormControl>
+                        <FormControl>
+                            <InputLabel htmlFor="seating">Select your Seating Preference</InputLabel>
+                            <Input name="seating" aria-describedby="my-helper-text" readOnly required={true} value={props.seating} />
+                        </FormControl>
+                        <FormHelperText id="my-helper-text">Confirm the details prior to submitting</FormHelperText>
+                    </div>
+                    <br /><br /><br />
+                    <div style={{ display: "flex", justifyContent: "center" }}>
+                        <Button type='submit' style={{ backgroundColor: "#F4CE14", color: "black", padding: "20px 40px 20px 40px", fontWeight: "bold", fontSize: "22px" }} size="large">Submit Reservation</Button>
+                    </div>
+                </form>
+            </div >
+        </>
+    );
 }
 
 export default Confirmation;

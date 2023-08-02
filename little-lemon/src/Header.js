@@ -1,7 +1,12 @@
 import { Button, Typography } from "@mui/material";
 import header_photo from "./images/restauranfood.jpg";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
+    const navigate = useNavigate()
+    function navigateReserve() {
+        navigate('/reserve')
+    }
     return (
         <header>
             <div className="header-section">
@@ -10,7 +15,7 @@ function Header() {
                     <Typography variant="h2" component={'div'} color={"white"} style={{ fontFamily: "Markazi" }}> Chicago</Typography>
                     <Typography variant="h5" component={'div'} color={'white'} style={{ width: '450px', paddingTop: '40px', fontFamily: "Inter", lineHeight: "1.5" }}>
                         We are a family owned Mediterranean restaurant focused on traditional recipes served with a modern twist.</Typography>
-                    <Button style={{ backgroundColor: "#F4CE14", marginTop: '100px', color: "black", padding: "20px 40px 20px 40px", fontWeight: "bold", fontSize: "22px" }} size="large">Reserve a Table</Button>
+                    <Button onClick={navigateReserve} style={{ backgroundColor: "#F4CE14", marginTop: '100px', color: "black", padding: "20px 40px 20px 40px", fontWeight: "bold", fontSize: "22px" }} size="large">Reserve a Table</Button>
                 </div>
                 <div style={{ backgroundColor: "#495E57" }}>
                     <div >
